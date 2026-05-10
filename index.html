@@ -13,185 +13,37 @@
             --white: #ffffff;
         }
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 15px;
             color: var(--text-dark);
         }
 
         .container {
             width: 100%;
             max-width: 400px;
-            padding: 20px;
         }
 
         .login-card {
             background: var(--white);
             padding: 40px 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(46, 204, 113, 0.15);
-            text-align: center;
-        }
-
-        .login-card h2 {
-            margin-bottom: 10px;
-            color: var(--dark-green);
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            outline: none;
-            box-sizing: border-box;
-        }
-
-        .input-group input:focus {
-            border-color: var(--primary-green);
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        button {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .btn-login { background-color: var(--primary-green); color: white; }
-        .btn-reg { background-color: #ecf0f1; color: var(--text-dark); }
-
-        #message { margin-top: 15px; font-size: 14px; font-weight: bold; }
-
-        /* Success Toolkit (Modal) */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background: var(--white);
-            padding: 30px;
             border-radius: 20px;
-            text-align: center;
-            animation: popIn 0.3s ease-out;
-        }
-
-        @keyframes popIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .check-icon {
-            width: 50px; height: 50px;
-            background: var(--primary-green);
-            color: white; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 15px; font-size: 24px;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <div class="login-card">
-            <h2>Welcome Back</h2>
-            <p>Enter your details</p>
-            
-            <div class="input-group">
-                <input type="text" id="username" placeholder="Username">
-                <input type="password" id="password" placeholder="Password">
-            </div>
-
-            <div class="button-group">
-                <button class="btn-login" onclick="handleLogin()">Login</button>
-                <button class="btn-reg" onclick="handleRegister()">Register</button>
-            </div>
-            
-            <p id="message"></p>
-        </div>
-    </div>
-
-    <div id="successModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="check-icon">✔</div>
-            <h3>Login Successful!</h3>
-            <p>You don enter boss!</p>
-            <button class="btn-login" onclick="closeModal()">Continue</button>
-        </div>
-    </div>
-
-    <script>
-        // 1. REGISTER FUNCTION (Make you fit save user first)
-        function handleRegister() {
-            const user = document.getElementById('username').value;
-            const pass = document.getElementById('password').value;
-            const msg = document.getElementById('message');
-
-            if (user && pass) {
-                localStorage.setItem(user, pass);
-                msg.style.color = "green";
-                msg.innerText = "Registration Successful! Now click Login.";
-            } else {
-                msg.style.color = "red";
-                msg.innerText = "Fill both fields first!";
-            }
-        }
-
-        // 2. LOGIN FUNCTION
-        function handleLogin() {
-            const user = document.getElementById('username').value;
-            const pass = document.getElementById('password').value;
-            const msg = document.getElementById('message');
-
-            // Check browser memory
-            const storedPass = localStorage.getItem(user);
-            
-            if (storedPass && storedPass === pass) {
-                showSuccess();
-                msg.innerText = "";
-            } else {
-                msg.style.color = "red";
-                msg.innerText = "Wrong username or password!";
-            }
-        }
-
-        function showSuccess() {
-            document.getElementById('successModal').style.display = 'flex';
-        }
-        
-        function closeModal() {
-            document.getElementById('successModal').style.display = 'none';
-        }
-    </script>
-</body>
-</html>
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(46, 204, 113, 0.15);
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.15);
             text-align: center;
         }
 
         .login-card h2 {
-            margin-bottom: 10px;
+            margin: 0 0 8px;
             color: var(--dark-green);
             font-size: 28px;
         }
@@ -203,33 +55,35 @@
 
         .input-group input {
             width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 15px;
+            padding: 14px 16px;
+            margin-bottom: 16px;
             border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            border-radius: 10px;
             outline: none;
-            box-sizing: border-box;
-            transition: border-color 0.3s;
+            font-size: 16px;
+            transition: all 0.3s;
         }
 
         .input-group input:focus {
             border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
         }
 
         .button-group {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             margin-top: 10px;
         }
 
         button {
             flex: 1;
-            padding: 12px;
+            padding: 14px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: 600;
-            transition: transform 0.2s, background 0.3s;
+            font-size: 16px;
+            transition: all 0.3s;
         }
 
         .btn-login {
@@ -252,21 +106,20 @@
         }
 
         #message {
-            margin-top: 15px;
-            font-size: 14px;
-            color: #e74c3c;
+            margin-top: 20px;
+            font-size: 14.5px;
+            font-weight: 600;
+            min-height: 20px;
         }
 
-        /* Success Toolkit (Modal) Styling */
+        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(6px);
             justify-content: center;
             align-items: center;
             z-index: 1000;
@@ -274,7 +127,7 @@
 
         .modal-content {
             background: var(--white);
-            padding: 30px;
+            padding: 35px 25px;
             border-radius: 20px;
             text-align: center;
             max-width: 320px;
@@ -283,34 +136,22 @@
         }
 
         @keyframes popIn {
-            from { transform: scale(0.5); opacity: 0; }
+            from { transform: scale(0.6); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
 
         .check-icon {
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             background: var(--primary-green);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
+            font-size: 32px;
             margin: 0 auto 20px;
-            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
-        }
-
-        .modal-content h3 {
-            margin: 0 0 10px;
-            color: var(--dark-green);
-        }
-
-        .modal-content button {
-            margin-top: 20px;
-            width: 100%;
-            background: var(--primary-green);
-            color: white;
+            box-shadow: 0 5px 20px rgba(46, 204, 113, 0.3);
         }
     </style>
 </head>
@@ -335,84 +176,73 @@
         </div>
     </div>
 
-    <!-- The Success Toolkit / Floating Modal -->
+    <!-- Success Modal -->
     <div id="successModal" class="modal-overlay">
         <div class="modal-content">
             <div class="check-icon">✔</div>
             <h3>Login Successful!</h3>
-            <p>Everything set! You dey logged in now.</p>
-            <button onclick="closeModal()">Continue</button>
+            <p>You don enter boss!</p>
+            <button class="btn-login" onclick="closeModal()">Continue</button>
         </div>
     </div>
 
-    <!-- Inside your HTML, update the script part for the bottom like this -->
     <script>
-    function handleRegister() {
-        let user = document.getElementById('username').value.trim();
-        let pass = document.getElementById('password').value.trim();
-        const msg = document.getElementById('message');
+        function handleRegister() {
+            let user = document.getElementById('username').value.trim();
+            let pass = document.getElementById('password').value.trim();
+            const msg = document.getElementById('message');
 
-        if (user === "" || pass === "") {
-            msg.style.color = "red";
-            msg.innerText = "Fill both username and password!";
-            return;
+            if (!user || !pass) {
+                msg.style.color = "red";
+                msg.innerText = "Fill both fields!";
+                return;
+            }
+
+            if (localStorage.getItem(user)) {
+                msg.style.color = "orange";
+                msg.innerText = "User already exists!";
+                return;
+            }
+
+            localStorage.setItem(user, pass);
+            msg.style.color = "green";
+            msg.innerText = "✅ Registration Successful!";
         }
 
-        // Check if user already exists
-        if (localStorage.getItem(user)) {
-            msg.style.color = "orange";
-            msg.innerText = "User already exists! Try logging in.";
-            return;
+        function handleLogin() {
+            let user = document.getElementById('username').value.trim();
+            let pass = document.getElementById('password').value.trim();
+            const msg = document.getElementById('message');
+
+            if (!user || !pass) {
+                msg.style.color = "red";
+                msg.innerText = "Enter username and password!";
+                return;
+            }
+
+            const storedPass = localStorage.getItem(user);
+
+            if (storedPass && storedPass === pass) {
+                msg.innerText = "";
+                showSuccess();
+            } else {
+                msg.style.color = "red";
+                msg.innerText = "❌ Wrong username or password!";
+            }
         }
 
-        localStorage.setItem(user, pass);
-        msg.style.color = "green";
-        msg.innerText = "✅ Registration Successful! Now click Login.";
-        
-        // Optional: clear fields after register
-        // document.getElementById('username').value = '';
-        // document.getElementById('password').value = '';
-    }
-
-    function handleLogin() {
-        let user = document.getElementById('username').value.trim();
-        let pass = document.getElementById('password').value.trim();
-        const msg = document.getElementById('message');
-
-        if (user === "" || pass === "") {
-            msg.style.color = "red";
-            msg.innerText = "Enter username and password!";
-            return;
+        function showSuccess() {
+            document.getElementById('successModal').style.display = 'flex';
         }
 
-        const storedPass = localStorage.getItem(user);
-        
-        if (storedPass && storedPass === pass) {
-            msg.innerText = "";
-            showSuccess();
-        } else {
-            msg.style.color = "red";
-            msg.innerText = "❌ Wrong username or password!";
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
         }
-    }
 
-    function showSuccess() {
-        document.getElementById('successModal').style.display = 'flex';
-    }
-    
-    function closeModal() {
-        document.getElementById('successModal').style.display = 'none';
-        // Optional: clear fields after successful login
-        // document.getElementById('username').value = '';
-        // document.getElementById('password').value = '';
-    }
-
-    // Bonus: Allow pressing Enter key to login
-    document.addEventListener('keydown', function(e) {
-        if (e.key === "Enter") {
-            handleLogin();
-        }
-    });
+        // Press Enter to login
+        document.addEventListener('keypress', (e) => {
+            if (e.key === "Enter") handleLogin();
+        });
     </script>
-    </body>
+</body>
 </html>
