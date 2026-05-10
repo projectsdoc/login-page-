@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Green Login System</title>
     <style>
-        /* Modern Green Design */
         :root {
             --primary-green: #2ecc71;
             --dark-green: #27ae60;
@@ -34,6 +33,158 @@
         .login-card {
             background: var(--white);
             padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(46, 204, 113, 0.15);
+            text-align: center;
+        }
+
+        .login-card h2 {
+            margin-bottom: 10px;
+            color: var(--dark-green);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-green);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-login { background-color: var(--primary-green); color: white; }
+        .btn-reg { background-color: #ecf0f1; color: var(--text-dark); }
+
+        #message { margin-top: 15px; font-size: 14px; font-weight: bold; }
+
+        /* Success Toolkit (Modal) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            animation: popIn 0.3s ease-out;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .check-icon {
+            width: 50px; height: 50px;
+            background: var(--primary-green);
+            color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 15px; font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="login-card">
+            <h2>Welcome Back</h2>
+            <p>Enter your details</p>
+            
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Username">
+                <input type="password" id="password" placeholder="Password">
+            </div>
+
+            <div class="button-group">
+                <button class="btn-login" onclick="handleLogin()">Login</button>
+                <button class="btn-reg" onclick="handleRegister()">Register</button>
+            </div>
+            
+            <p id="message"></p>
+        </div>
+    </div>
+
+    <div id="successModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="check-icon">✔</div>
+            <h3>Login Successful!</h3>
+            <p>You don enter boss!</p>
+            <button class="btn-login" onclick="closeModal()">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. REGISTER FUNCTION (Make you fit save user first)
+        function handleRegister() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const msg = document.getElementById('message');
+
+            if (user && pass) {
+                localStorage.setItem(user, pass);
+                msg.style.color = "green";
+                msg.innerText = "Registration Successful! Now click Login.";
+            } else {
+                msg.style.color = "red";
+                msg.innerText = "Fill both fields first!";
+            }
+        }
+
+        // 2. LOGIN FUNCTION
+        function handleLogin() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const msg = document.getElementById('message');
+
+            // Check browser memory
+            const storedPass = localStorage.getItem(user);
+            
+            if (storedPass && storedPass === pass) {
+                showSuccess();
+                msg.innerText = "";
+            } else {
+                msg.style.color = "red";
+                msg.innerText = "Wrong username or password!";
+            }
+        }
+
+        function showSuccess() {
+            document.getElementById('successModal').style.display = 'flex';
+        }
+        
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(46, 204, 113, 0.15);
             text-align: center;
