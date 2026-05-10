@@ -2,18 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login Page</title>
+    <!-- This line prevents the page from zooming out/moving -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Green Login System</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="login-box">
-        <h2>Login</h2>
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="handleLogin()">Login</button>
-        <button onclick="handleRegister()">Register</button>
-        <p id="message"></p>
+
+    <div class="container">
+        <div class="login-card">
+            <h2>Welcome Back</h2>
+            <p>Please enter your details</p>
+            
+            <div class="input-group">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-login" onclick="handleLogin()">Login</button>
+                <button class="btn-reg" onclick="handleRegister()">Register</button>
+            </div>
+            
+            <p id="message"></p>
+        </div>
     </div>
+
+    <!-- The Success Toolkit / Floating Modal -->
+    <div id="successModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="check-icon">✔</div>
+            <h3>Success!</h3>
+            <p>You have logged in successfully.</p>
+            <button onclick="closeModal()">Continue</button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
+    <script>
+        // Small extra script just to handle the floating window
+        function showSuccess() {
+            document.getElementById('successModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+        
+        // We wrap your existing handleLogin to show the toolkit
+        const originalLogin = handleLogin;
+        handleLogin = function() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const storedPass = localStorage.getItem(user);
+            
+            if (storedPass && storedPass === pass) {
+                showSuccess();
+            } else {
+                originalLogin(); // Runs your original JS for errors
+            }
+        }
+    </script>
 </body>
 </html>
