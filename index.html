@@ -346,38 +346,55 @@
     </div>
 
     <!-- Inside your HTML, update the script part for the bottom like this -->
+    <script>
+    function handleRegister() {
+        let user = document.getElementById('username').value.trim();
+        let pass = document.getElementById('password').value.trim();
+        const msg = document.getElementById('message');
 
-<script src="script.js"></script>
-<script>
-    // We wait make the DOM load finish first
-    window.onload = function() {
-        // We take the original function from your script.js
-        const originalLogin = window.handleLogin;
+        if (user === "" || pass === "") {
+            msg.style.color = "red";
+            msg.innerText = "Fill both username and password!";
+            return;
+        }
 
-        // We redefine am to add our green toolkit logic
-        window.handleLogin = function() {
-            const user = document.getElementById('username').value;
-            const pass = document.getElementById('password').value;
-            
-            console.log("Attempting login for:", user); // Debugging
+        // Check if user already exists
+        if (localStorage.getItem(user)) {
+            msg.style.color = "orange";
+            msg.innerText = "User already exists! Try logging in.";
+            return;
+        }
 
-            // If you save user for localStorage before, this go check am
-            const storedPass = localStorage.getItem(user);
-            
-            if (storedPass && storedPass === pass) {
-                showSuccess();
-            } else {
-                console.log("No match found in localStorage, running original script.js logic");
-                if (typeof originalLogin === "function") {
-                    originalLogin(); 
-                } else {
-                    // Fallback if script.js no load or function no dey
-                    document.getElementById('message').innerText = "Invalid Login or Script missing!";
-                    document.getElementById('message').style.color = "red";
-                }
-            }
-        };
-    };
+        localStorage.setItem(user, pass);
+        msg.style.color = "green";
+        msg.innerText = "✅ Registration Successful! Now click Login.";
+        
+        // Optional: clear fields after register
+        // document.getElementById('username').value = '';
+        // document.getElementById('password').value = '';
+    }
+
+    function handleLogin() {
+        let user = document.getElementById('username').value.trim();
+        let pass = document.getElementById('password').value.trim();
+        const msg = document.getElementById('message');
+
+        if (user === "" || pass === "") {
+            msg.style.color = "red";
+            msg.innerText = "Enter username and password!";
+            return;
+        }
+
+        const storedPass = localStorage.getItem(user);
+        
+        if (storedPass && storedPass === pass) {
+            msg.innerText = "";
+            showSuccess();
+        } else {
+            msg.style.color = "red";
+            msg.innerText = "❌ Wrong username or password!";
+        }
+    }
 
     function showSuccess() {
         document.getElementById('successModal').style.display = 'flex';
@@ -385,8 +402,17 @@
     
     function closeModal() {
         document.getElementById('successModal').style.display = 'none';
+        // Optional: clear fields after successful login
+        // document.getElementById('username').value = '';
+        // document.getElementById('password').value = '';
     }
-</script>
-    
+
+    // Bonus: Allow pressing Enter key to login
+    document.addEventListener('keydown', function(e) {
+        if (e.key === "Enter") {
+            handleLogin();
+        }
+    });
+    </script>
     </body>
 </html>
