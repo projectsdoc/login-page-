@@ -194,32 +194,48 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
-    <script>
-        function showSuccess() {
-            document.getElementById('successModal').style.display = 'flex';
-        }
-        function closeModal() {
-            document.getElementById('successModal').style.display = 'none';
-        }
-        
-        const originalLogin = handleLogin;
-        handleLogin = function() {
+    <!-- Inside your HTML, update the script part for the bottom like this -->
+
+<script src="script.js"></script>
+<script>
+    // We wait make the DOM load finish first
+    window.onload = function() {
+        // We take the original function from your script.js
+        const originalLogin = window.handleLogin;
+
+        // We redefine am to add our green toolkit logic
+        window.handleLogin = function() {
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
+            
+            console.log("Attempting login for:", user); // Debugging
+
+            // If you save user for localStorage before, this go check am
             const storedPass = localStorage.getItem(user);
             
             if (storedPass && storedPass === pass) {
                 showSuccess();
             } else {
-                // Check if originalLogin is defined before calling
+                console.log("No match found in localStorage, running original script.js logic");
                 if (typeof originalLogin === "function") {
                     originalLogin(); 
                 } else {
-                    document.getElementById('message').innerText = "Invalid login details!";
+                    // Fallback if script.js no load or function no dey
+                    document.getElementById('message').innerText = "Invalid Login or Script missing!";
+                    document.getElementById('message').style.color = "red";
                 }
             }
-        }
-    </script>
-</body>
+        };
+    };
+
+    function showSuccess() {
+        document.getElementById('successModal').style.display = 'flex';
+    }
+    
+    function closeModal() {
+        document.getElementById('successModal').style.display = 'none';
+    }
+</script>
+    
+    </body>
 </html>
