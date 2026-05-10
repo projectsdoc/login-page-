@@ -2,10 +2,166 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- This line prevents the page from zooming out/moving -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Green Login System</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Modern Green Design */
+        :root {
+            --primary-green: #2ecc71;
+            --dark-green: #27ae60;
+            --bg-color: #f0f4f1;
+            --text-dark: #2c3e50;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: var(--text-dark);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(46, 204, 113, 0.15);
+            text-align: center;
+        }
+
+        .login-card h2 {
+            margin-bottom: 10px;
+            color: var(--dark-green);
+            font-size: 28px;
+        }
+
+        .login-card p {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-green);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .btn-login {
+            background-color: var(--primary-green);
+            color: white;
+        }
+
+        .btn-login:hover {
+            background-color: var(--dark-green);
+            transform: translateY(-2px);
+        }
+
+        .btn-reg {
+            background-color: #ecf0f1;
+            color: var(--text-dark);
+        }
+
+        .btn-reg:hover {
+            background-color: #bdc3c7;
+        }
+
+        #message {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #e74c3c;
+        }
+
+        /* Success Toolkit (Modal) Styling */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 320px;
+            width: 90%;
+            animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .check-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-green);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin: 0 auto 20px;
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+        }
+
+        .modal-content h3 {
+            margin: 0 0 10px;
+            color: var(--dark-green);
+        }
+
+        .modal-content button {
+            margin-top: 20px;
+            width: 100%;
+            background: var(--primary-green);
+            color: white;
+        }
+    </style>
 </head>
 <body>
 
@@ -32,15 +188,14 @@
     <div id="successModal" class="modal-overlay">
         <div class="modal-content">
             <div class="check-icon">✔</div>
-            <h3>Success!</h3>
-            <p>You have logged in successfully.</p>
+            <h3>Login Successful!</h3>
+            <p>Everything set! You dey logged in now.</p>
             <button onclick="closeModal()">Continue</button>
         </div>
     </div>
 
     <script src="script.js"></script>
     <script>
-        // Small extra script just to handle the floating window
         function showSuccess() {
             document.getElementById('successModal').style.display = 'flex';
         }
@@ -48,7 +203,6 @@
             document.getElementById('successModal').style.display = 'none';
         }
         
-        // We wrap your existing handleLogin to show the toolkit
         const originalLogin = handleLogin;
         handleLogin = function() {
             const user = document.getElementById('username').value;
@@ -58,7 +212,12 @@
             if (storedPass && storedPass === pass) {
                 showSuccess();
             } else {
-                originalLogin(); // Runs your original JS for errors
+                // Check if originalLogin is defined before calling
+                if (typeof originalLogin === "function") {
+                    originalLogin(); 
+                } else {
+                    document.getElementById('message').innerText = "Invalid login details!";
+                }
             }
         }
     </script>
